@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace MyShop.Core.Models
 {
-    public class Product
+    public class Product : BaseEntity
     {
-        public string Id { get; set; } 
+       
         [StringLength(20)]
         [DisplayName("Product Name")]
         public string Name { get; set; }
@@ -21,9 +21,9 @@ namespace MyShop.Core.Models
         public string Image { get; set; }
 
         //every time a new product is created this will create a new random generated string ID
-        public Product() {
-            this.Id = Guid.NewGuid().ToString();
-        }
+        //public Product() {
+        //    this.Id = Guid.NewGuid().ToString();
+        //}
 
     }
 }
