@@ -12,7 +12,7 @@ namespace MyShop.DataAccess.InMemory
     {
         ObjectCache cache = MemoryCache.Default;
         //then create an internal list of product
-        List<Product> products = new List<Product>();
+        List<Product> products;
         //create constructor to create inital standardization
         public ProductRepository()
 

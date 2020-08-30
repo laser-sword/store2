@@ -4,16 +4,24 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MyShop.Core.Models;
+using MyShop.Core.ViewModels;
 using MyShop.DataAccess.InMemory;
+
+
 namespace MyShop.WebUI.Controllers
 {
     public class ProductManagerController : Controller
     {
         //cretae an instance of your product repsoitory 
         ProductRepository context;
+        ProductCategoryRepository productCategories;
         //then create a contructor to initialize thats product repositry
+        //so you can send through the product and list of product categories
+
         public ProductManagerController() {
             context = new ProductRepository();
+            //initialize the repository
+            productCategories = new ProductCategoryRepository();
 
         }
 
@@ -29,8 +37,15 @@ namespace MyShop.WebUI.Controllers
         //first page is to create page to add details
         //2nd page is to post those details in 
         public ActionResult Create() {
-            Product product = new Product();
-            return View(product);
+            //create a reference to the productmanager viewmodel
+            ProductManagerViewModel viewModel = new ProductManagerViewModel();
+
+            //put in an empty product
+            viewModel.Product = new Product();
+            //then add a list of product categories that you get from the database
+            viewModel.ProductCategories = productCategories.Collection();        
+          
+            return View(viewModel);
         }
         [HttpPost]
         public ActionResult Create(Product product) {
@@ -54,7 +69,14 @@ namespace MyShop.WebUI.Controllers
 
             }
             else {
-                return View(product);
+
+                //same sa create do it for edit as well
+                ProductManagerViewModel viewModel = new ProductManagerViewModel();
+                //
+                viewModel.Product = product;
+                viewModel.ProductCategories = productCategories.Collection();
+                return View(viewModel);
+                //since you have changed what you are passing in the view, you now need to update the view pages
             }
             
         }
