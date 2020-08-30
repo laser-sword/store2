@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MyShop.Core.Contracts;
 using MyShop.Core.Models;
 using MyShop.Core.ViewModels;
 using MyShop.DataAccess.InMemory;
@@ -15,22 +16,24 @@ namespace MyShop.WebUI.Controllers
         //cretae an instance of your product repsoitory 
         //ProductRepository context;
         //create a new inMemoryRepository to take in teh new baseclass
-        InMemoryRepository<Product> context;
-        InMemoryRepository<ProductCategory> productCategories;
+        IRepository<Product> context;
+        IRepository<ProductCategory> productCategories;
 
 
         //ProductCategoryRepository productCategories;
         //then create a contructor to initialize thats product repositry
         //so you can send through the product and list of product categories
 
-        public ProductManagerController() {
+        public ProductManagerController(IRepository<Product> productContext, IRepository<ProductCategory> productCategoryContext  ) {
             //context = new ProductRepository();
             ////initialize the repository
             //productCategories = new ProductCategoryRepository();
 
-            context = new InMemoryRepository<Product>();
-            productCategories = new InMemoryRepository<ProductCategory>();
 
+            //context = new InMemoryRepository<Product>();
+            //productCategories = new InMemoryRepository<ProductCategory>();
+            context = productContext;
+            productCategories = productCategoryContext;
 
         }
 
